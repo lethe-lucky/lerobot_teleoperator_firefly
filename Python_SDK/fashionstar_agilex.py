@@ -68,15 +68,15 @@ class FashionStarAgilex:
             print(f"FashionStar机械臂连接失败: {e}")
             raise
         
-        # 禁用FashionStar力矩
-        self.disable_torque()
-        self.fashionstar_handler.reset_multi_turn_angle(0xff)
-        
         # 舵机配置
         self.servo_ids = [0, 1, 2, 3, 4, 5]  # 6个关节舵机
         if gripper_exist:
             self.servo_ids.append(6)  # 夹爪舵机
         
+        # 清除圈数
+        for servo_id in self.servo_ids:
+            self.fashionstar_handler.write["Stop_On_Control_Mode"](servo_id, "unlocked", 900)
+
         # 关节名称
         self.joint_names = ['joint1', 'joint2', 'joint3', 'joint4', 'joint5', 'joint6']
         if gripper_exist:
