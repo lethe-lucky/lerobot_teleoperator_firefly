@@ -30,13 +30,13 @@ class Piper(Robot):
 
         self.cameras = make_cameras_from_configs(config.cameras)
 
-        self.motors_pos_type = {"Joint_1.pos": int,
-                        "Joint_2.pos": int,
-                        "Joint_3.pos": int,
-                        "Joint_4.pos": int,
-                        "Joint_5.pos": int,
-                        "Joint_6.pos": int,
-                        "Gripper.pos": int}
+        self.motors_pos_type = {"Joint_1.pos": float,
+                        "Joint_2.pos": float,
+                        "Joint_3.pos": float,
+                        "Joint_4.pos": float,
+                        "Joint_5.pos": float,
+                        "Joint_6.pos": float,
+                        "Gripper.pos": float}
 
         
 
@@ -91,13 +91,13 @@ class Piper(Robot):
         ArmGripperMsgs = self.piper.GetArmGripperMsgs()
 
         obs_dict = {}
-        obs_dict["Joint_1.pos"] = ArmJointMsgs.joint_state.joint_1
-        obs_dict["Joint_2.pos"] = ArmJointMsgs.joint_state.joint_2
-        obs_dict["Joint_3.pos"] = ArmJointMsgs.joint_state.joint_3
-        obs_dict["Joint_4.pos"] = ArmJointMsgs.joint_state.joint_4
-        obs_dict["Joint_5.pos"] = ArmJointMsgs.joint_state.joint_5
-        obs_dict["Joint_6.pos"] = ArmJointMsgs.joint_state.joint_6
-        obs_dict["Gripper.pos"]= ArmGripperMsgs.gripper_state.grippers_angle
+        obs_dict["Joint_1.pos"] = ArmJointMsgs.joint_state.joint_1*0.001
+        obs_dict["Joint_2.pos"] = ArmJointMsgs.joint_state.joint_2*0.001
+        obs_dict["Joint_3.pos"] = ArmJointMsgs.joint_state.joint_3*0.001
+        obs_dict["Joint_4.pos"] = ArmJointMsgs.joint_state.joint_4*0.001
+        obs_dict["Joint_5.pos"] = ArmJointMsgs.joint_state.joint_5*0.001
+        obs_dict["Joint_6.pos"] = ArmJointMsgs.joint_state.joint_6*0.001
+        obs_dict["Gripper.pos"]= ArmGripperMsgs.gripper_state.grippers_angle*0.001
 
         dt_ms = (time.perf_counter() - start) * 1e3
         logger.debug(f"{self} read state: {dt_ms:.1f}ms")
@@ -156,13 +156,13 @@ class Piper(Robot):
         ArmGripperMsgs = self.piper.GetArmGripperMsgs()
 
         action = {}
-        action["Joint_1.pos"] = ArmJointMsgs.joint_state.joint_1
-        action["Joint_2.pos"] = ArmJointMsgs.joint_state.joint_2
-        action["Joint_3.pos"] = ArmJointMsgs.joint_state.joint_3
-        action["Joint_4.pos"] = ArmJointMsgs.joint_state.joint_4
-        action["Joint_5.pos"] = ArmJointMsgs.joint_state.joint_5
-        action["Joint_6.pos"] = ArmJointMsgs.joint_state.joint_6
-        action["Gripper.pos"]= ArmGripperMsgs.gripper_state.grippers_angle
+        action["Joint_1.pos"] = ArmJointMsgs.joint_state.joint_1*0.001
+        action["Joint_2.pos"] = ArmJointMsgs.joint_state.joint_2*0.001
+        action["Joint_3.pos"] = ArmJointMsgs.joint_state.joint_3*0.001
+        action["Joint_4.pos"] = ArmJointMsgs.joint_state.joint_4*0.001
+        action["Joint_5.pos"] = ArmJointMsgs.joint_state.joint_5*0.001
+        action["Joint_6.pos"] = ArmJointMsgs.joint_state.joint_6*0.001
+        action["Gripper.pos"]= ArmGripperMsgs.gripper_state.grippers_angle*0.001
 
 
 
