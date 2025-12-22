@@ -149,5 +149,25 @@ class Piper(Robot):
 
         logger.info(f"{self} disconnected.")
 
+    def get_action(self) -> dict[str, float]:
+        start = time.perf_counter()
+
+        ArmJointMsgs = self.piper.GetArmJointMsgs()
+        ArmGripperMsgs = self.piper.GetArmGripperMsgs()
+
+        action = {}
+        action["Joint_1.pos"] = ArmJointMsgs.joint_state.joint_1
+        action["Joint_2.pos"] = ArmJointMsgs.joint_state.joint_2
+        action["Joint_3.pos"] = ArmJointMsgs.joint_state.joint_3
+        action["Joint_4.pos"] = ArmJointMsgs.joint_state.joint_4
+        action["Joint_5.pos"] = ArmJointMsgs.joint_state.joint_5
+        action["Joint_6.pos"] = ArmJointMsgs.joint_state.joint_6
+        action["Gripper.pos"]= ArmGripperMsgs.gripper_state.grippers_angle
+
+
+
+        dt_ms = (time.perf_counter() - start) * 1e3
+        logger.debug(f"{self} read action: {dt_ms:.1f}ms")
+        return action
 
     
