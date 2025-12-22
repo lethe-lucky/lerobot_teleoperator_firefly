@@ -8,7 +8,6 @@ from piper_sdk import *
 from .config_piper import PiperConfig
 from functools import cached_property
 
-from lerobot.cameras import make_cameras_from_configs
 from lerobot.utils.errors import DeviceAlreadyConnectedError, DeviceNotConnectedError
 # from lerobot.motors import Motor, MotorCalibration, MotorNormMode
 from lerobot.robots.robot import Robot
@@ -65,6 +64,8 @@ class Piper(Robot):
 
     def connect(self, calibrate: bool = True) -> None:
         self.piper.ConnectPort()
+        for cam in self.cameras.values():
+            cam.connect()
         while( not self.piper.EnablePiper()):
             time.sleep(0.01)
         self._is_connected = True
